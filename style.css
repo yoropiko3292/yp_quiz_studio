@@ -5,6 +5,6 @@ td{padding: 0.7em 0.2em;}
 tr{border-bottom: 1px solid black;;}
 select{width: 50%;font-size: large;}
 table{margin-top: 2em;margin-bottom: 2em;border-collapse:collapse;width: 100%;}
-input[type="text"]{font-size: large;max-width:30%;padding:0.2em;}
+input[type="text"]{width:10em;font-size: large;max-width:100%;padding:0.2em;}
 #m::before{content:"M:";}
 #n::before{content:"N:";}
