@@ -23,23 +23,28 @@ document.getElementById("rule-select").addEventListener("change",()=>{
     let ruleset = document.getElementById("rule-select");
     let inpM = document.getElementById("m");
     let inpN = document.getElementById("n");
-    inpM.value = "";
-    inpN.value = "";
+    inpM.value = 5;
+    inpN.value = 3;
     if(ruleset.value == "fr"){
         inpM.style.visibility = "hidden"
-        inpN.style.visibility = "hidden"
+        inpN.style.visibility = "hidden
     }else if(ruleset.value == "ox"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "visible"
+        inpN.style.visibility = "visible""
+        inpM.value = "";
+        inpN.value = "";
     }else if(ruleset.value == "by"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden"
+        inpN.style.visibility = "hidden""
+        inpM.value = "";
     }else if(ruleset.value == "ny"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden"
+        inpN.style.visibility = "hidden""
+        inpM.value = "";
     }else if(ruleset.value == "ud"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden"
+        inpN.style.visibility = "hidden""
+        inpM.value = "";
     }
     rule = ruleset.value;
 });
