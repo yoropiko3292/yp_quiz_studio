@@ -30,20 +30,20 @@ document.getElementById("rule-select").addEventListener("change",()=>{
         inpN.style.visibility = "hidden
     }else if(ruleset.value == "ox"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "visible""
+        inpN.style.visibility = "visible"
         inpM.value = "";
         inpN.value = "";
     }else if(ruleset.value == "by"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden""
+        inpN.style.visibility = "hidden"
         inpM.value = "";
     }else if(ruleset.value == "ny"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden""
+        inpN.style.visibility = "hidden"
         inpM.value = "";
     }else if(ruleset.value == "ud"){
         inpM.style.visibility = "visible"
-        inpN.style.visibility = "hidden""
+        inpN.style.visibility = "hidden"
         inpM.value = "";
     }
     rule = ruleset.value;
