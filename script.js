@@ -203,6 +203,7 @@ function pointRes(x,y){
     if(rule == "by"){
         resTxt.value = Number(truTxt.value) * (M - Number(falTxt.value));
         if(resTxt.value >= M * M) win = true;
+        if(falTxt.value >= M) cont = false;
     }
     if(rule == "ny"){
         if(y == 1){
