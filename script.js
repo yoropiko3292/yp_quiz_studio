@@ -1,9 +1,11 @@
+//rule:ルール M:今のM N:今のN ID:プレイヤーID(ニューゲームでも次の番号から) data:前までの状態を保存
 let rule = "ox";
 let M = 1;
 let N = 1;
 let ID = 0;
 let data = [];
 
+//設定の開閉
 document.getElementById("form-open").addEventListener("click",()=>{
     let f = document.getElementById("setting");
     let o = document.getElementById("form-open");
@@ -16,12 +18,13 @@ document.getElementById("form-open").addEventListener("click",()=>{
     }
 });
 
+//ルール選択したらそれに応じたN,Mの値入力を表示
 document.getElementById("rule-select").addEventListener("change",()=>{
     let ruleset = document.getElementById("rule-select");
     let inpM = document.getElementById("m");
     let inpN = document.getElementById("n");
-    inpM.value = 5;
-    inpN.value = 3;
+    inpM.value = "";
+    inpN.value = "";
     if(ruleset.value == "fr"){
         inpM.style.visibility = "hidden"
         inpN.style.visibility = "hidden"
@@ -41,19 +44,10 @@ document.getElementById("rule-select").addEventListener("change",()=>{
     rule = ruleset.value;
 });
 
-document.getElementById("undo").addEventListener("click",()=>{
-    if(data.length > 1){
-        let datasets = document.getElementsByClassName("dataset");
-        for(let i = 0;i < datasets.length;i++){
-            datasets[i].value = data[data.length - 2][i];
-        }
-        data.pop();
-    }
-});
-
+//新しいゲームを開始
 document.getElementById("start").addEventListener("click",newGame);
-
 function newGame(){
+    //履歴の初期化など
     data = [];
     let table = document.getElementById("table");
     let player = document.getElementById("player").value;
@@ -71,7 +65,7 @@ function newGame(){
          alert("無効な値が入力されています");
          return;
     }
-    if(N < 1 || N % 1 != 0){ N = 2;}
+    //ルールに応じて要素を配置
     let tmp = "ルール : ";
     if(rule == "fr") tmp += "Free";
     if(rule == "ox") tmp += M + "◯" + N + "✕";
@@ -164,6 +158,7 @@ function newGame(){
         table.appendChild(tr);
         ID++;
     }
+    //最初の履歴を追加
     let values = [];
     let datasets = document.getElementsByClassName("dataset");
     for(let i = 0;i < datasets.length;i++){
@@ -172,6 +167,7 @@ function newGame(){
     data[data.length] = values;
 }
 
+//正解
 function pointAdd(x){
     if(rule == "fr" || rule == "ox" || rule == "by"){
         let txt = document.getElementById("tru" + x);
@@ -180,6 +176,7 @@ function pointAdd(x){
     pointRes(x,1);
 }
 
+//不正解
 function pointsub(x){
     if(rule == "fr" || rule == "ox" || rule == "by"){
         let txt = document.getElementById("fal" + x);
@@ -188,7 +185,7 @@ function pointsub(x){
     pointRes(x,-1);
 }
 
-//正答y1,誤答y-1
+//点数、勝敗判定 引数x=id,正答ならy=1,誤答ならy=-1
 function pointRes(x,y){
     let datasets = document.getElementsByClassName("dataset");
     let time = new Date();
@@ -239,3 +236,14 @@ function pointRes(x,y){
     }
     data[data.length] = values;
 }
+
+//1手前の状態に戻す
+document.getElementById("undo").addEventListener("click",()=>{
+    if(data.length > 1){
+        let datasets = document.getElementsByClassName("dataset");
+        for(let i = 0;i < datasets.length;i++){
+            datasets[i].value = data[data.length - 2][i];
+        }
+        data.pop();
+    }
+});
