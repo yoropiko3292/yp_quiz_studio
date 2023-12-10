@@ -27,7 +27,7 @@ document.getElementById("rule-select").addEventListener("change",()=>{
     inpN.value = 3;
     if(ruleset.value == "fr"){
         inpM.style.visibility = "hidden"
-        inpN.style.visibility = "hidden
+        inpN.style.visibility = "hidden"
     }else if(ruleset.value == "ox"){
         inpM.style.visibility = "visible"
         inpN.style.visibility = "visible"
