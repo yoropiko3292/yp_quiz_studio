@@ -76,7 +76,7 @@ function newGame(){
     if(rule == "fr") tmp += "Free";
     if(rule == "ox") tmp += M + "◯" + N + "✕";
     if(rule == "by") tmp += M + "by" + M;
-    if(rule == "ny") tmp += "+" + M + "/" + "-" + N;
+    if(rule == "ny") tmp += M + "NewYork";
     if(rule == "ud") tmp += M + "Up Down";
     document.getElementById("rule").textContent = tmp;
     while(table.firstChild){
