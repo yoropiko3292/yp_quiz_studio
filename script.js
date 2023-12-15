@@ -6,6 +6,7 @@ let ID = 0;
 let last = 0;
 let data = [];
 let people = [];
+let preAns = "none";
 
 //設定の開閉
 document.getElementById("form-open").addEventListener("click",()=>{
@@ -163,7 +164,7 @@ function newGame(){
          return;
     }
     if(L < 1 || L % 1 != 0){
-         document.getElementById("num").textContent = "なし";
+         document.getElementById("num").textContent = "設定なし";
     }else{
         document.getElementById("num").textContent = L;
     }
@@ -175,6 +176,11 @@ function newGame(){
     if(rule == "ny") tmp += M + "NewYork";
     if(rule == "ud") tmp += M + "Up Down";
     document.getElementById("rule").textContent = tmp;
+    if(document.getElementById("ctn").checked){ 
+        preAns = "ok";
+    
+    }
+    else{ preAns = "none";}
     let temp = document.getElementsByClassName("nameList");
     people = [];
     for(let i = 0;i < temp.length;i++){
@@ -194,6 +200,7 @@ function newGame(){
     for(let i = 0;i < datasets.length;i++){
         values.push(datasets[i].value);
     }
+    values.push(preAns);
     data[data.length] = values;
 }
 
@@ -201,9 +208,12 @@ function newGame(){
 function pointAdd(x){
     if(rule == "fr" || rule == "ox" || rule == "by"){
         let txt = document.getElementById("tru" + x);
+        if(preAns == x)txt.value = Number(txt.value) + 1;
         txt.value = Number(txt.value) + 1;
     }
-    pointRes(x,1);
+    if(preAns == x)pointRes(x,2);
+    else pointRes(x,1);
+    if(preAns != "none") preAns = x;
 }
 
 //不正解
@@ -212,10 +222,11 @@ function pointsub(x){
         let txt = document.getElementById("fal" + x);
         txt.value = Number(txt.value) + 1;
     }
+    if(preAns == x) preAns = "";
     pointRes(x,-1);
 }
 
-//点数、勝敗判定 引数x=id,正答ならy=1,誤答ならy=-1
+//点数、勝敗判定 引数x=id,正答ならy=1,誤答ならy=-1,連答ならy=2
 function pointRes(x,y){
     let lastText = document.getElementById("num");
     let datasets = document.getElementsByClassName("dataset");
@@ -233,16 +244,12 @@ function pointRes(x,y){
         if(falTxt.value >= M) cont = false;
     }
     if(rule == "ny"){
-        if(y == 1){
-            resTxt.value = Number(resTxt.value) + 1;
-        }else if(y == -1){
-            resTxt.value = Number(resTxt.value) - 1;
-        }
+        resTxt.value = Number(resTxt.value) + y;
         if(resTxt.value >= M) win = true;
     }
     if(rule == "ud"){
-        if(y == 1){
-            resTxt.value = Number(resTxt.value) + 1;
+        if(y <= 1){
+            resTxt.value = Number(resTxt.value) + y;
             if(resTxt.value >= M) win = true;
         }else if(y == -1){
             resTxt.value = 0;
@@ -268,8 +275,9 @@ function pointRes(x,y){
     for(let i = 0;i < datasets.length;i++){
         values.push(datasets[i].value);
     }
+    values.push(preAns);
     data[data.length] = values;
-    if(lastText.textContent != "なし") lastText.textContent = Number(lastText.textContent) - 1;
+    if(lastText.textContent != "設定なし") lastText.textContent = Number(lastText.textContent) - 1;
     if(lastText.textContent == 0)setTimeout(()=>{alert("終了!")},100);
 }
 
@@ -287,6 +295,7 @@ document.getElementById("undo").addEventListener("click",()=>{
         for(let i = 0;i < datasets.length;i++){
             datasets[i].value = data[data.length - 2][i];
         }
+        preAns = data[data.length - 2][data[data.length - 2].length - 1];
         data.pop();
     }
 });
