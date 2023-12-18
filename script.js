@@ -271,7 +271,7 @@ function pointRes(x,y){
     if(!cont && (stateTxt.value == "-" || stateTxt.value == "誤答1")){
         stateTxt.value = "失格  " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
     }
-    if(win && stateTxt.value == "-"){
+    if(win && (stateTxt.value != "-" || stateTxt.value != "誤答1")){
         stateTxt.value = "Win!  " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
     }
     }
