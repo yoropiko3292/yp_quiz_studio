@@ -1,6 +1,6 @@
 header,h1{background-color: aquamarine;margin: 0px;margin-bottom: 10px;}
 h1{display: inline;}
-#setting{background-color: gainsboro;padding: 1em;}
+#setting{background-color: thistle;padding: 1em;margin-top: 1em;}
 td{padding: 0.7em 0.2em;}
 tr{border-bottom: 1px solid black;}
 select{width: 50%;font-size: larger;}
@@ -8,6 +8,8 @@ table{margin-top: 2em;margin-bottom: 2em;border-collapse:collapse;width: 100%;}
 input{font-size: large;}
 input[type="text"]{width:10em;max-width:100%;padding:0.2em;}
 input[type="number"]{width:10em;max-width:100%;padding:0.2em;}
+input[type="checkbox"]{width:1em;height: 1em;padding:0.2em;}
 input[type="button"]{max-width:100%;padding:0.3em;}
 .dataset{width:7em !important;}
-body{font-size: larger;}
+body{font-size: larger;background-color: cornsilk;}
+html{padding: 0;margin: 0;}
