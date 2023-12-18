@@ -141,9 +141,13 @@ function addMember(){
     ID++;
 }
 
-//新しいゲームを開始
 document.getElementById("start").addEventListener("click",newGame);
+
+//新しいゲームを開始
 function newGame(){
+    document.getElementById("add").disabled = false;
+    document.getElementById("skip").disabled = false;
+    document.getElementById("undo").disabled = false;
     //履歴の初期化など
     data = [];
     let table = document.getElementById("table");
@@ -169,18 +173,18 @@ function newGame(){
         document.getElementById("num").textContent = L;
     }
     //ルールに応じて要素を配置
+    if(document.getElementById("ctn").checked) preAns = "ok";
+    else preAns = "none";
     let tmp = "ルール : ";
+    if(preAns == "ok") tmp += "連答あり";
+    else  tmp += "連答なし";
+    if(preAns == "")
     if(rule == "fr") tmp += "Free";
     if(rule == "ox") tmp += M + "◯" + N + "✕";
     if(rule == "by") tmp += M + "by" + M;
     if(rule == "ny") tmp += M + "NewYork";
     if(rule == "ud") tmp += M + "Up Down";
     document.getElementById("rule").textContent = tmp;
-    if(document.getElementById("ctn").checked){ 
-        preAns = "ok";
-    
-    }
-    else{ preAns = "none";}
     let temp = document.getElementsByClassName("nameList");
     people = [];
     for(let i = 0;i < temp.length;i++){
@@ -248,7 +252,7 @@ function pointRes(x,y){
         if(resTxt.value >= M) win = true;
     }
     if(rule == "ud"){
-        if(y <= 1){
+        if(y >= 1){
             resTxt.value = Number(resTxt.value) + y;
             if(resTxt.value >= M) win = true;
         }else if(y == -1){
@@ -284,6 +288,22 @@ function pointRes(x,y){
 //スキップ
 document.getElementById("skip").addEventListener("click",()=>{
     pointRes(0,0);
+});
+
+//メンバー追加
+document.getElementById("add").addEventListener("click",()=>{
+    let result = window.confirm("この操作を取り消すことはできません。実行しますか？");
+    if(result){
+        addMember();
+        data = [];
+        let values = [];
+        let datasets = document.getElementsByClassName("dataset");
+        for(let i = 0;i < datasets.length;i++){
+            values.push(datasets[i].value);
+        }
+        values.push(preAns);
+        data[data.length] = values;
+    }
 });
 
 //1手前の状態に戻す
