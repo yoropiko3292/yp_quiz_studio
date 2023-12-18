@@ -11,9 +11,9 @@
             <h1>YP QUIZ STUDIO</h1>
         </header>
         <main>
-            <span>設定</span><input type="button" value="-" id="form-open"/>
+            <label for="form-open">設定</label><input type="button" value="-" id="form-open"/>
             <div id="setting">
-                <span>ルール</span>
+                <label for="rule-select">ルール</label>
                 <select id="rule-select">
                     <option value="ox">M◯N✕</option>
                     <option value="by">M by M</option>
@@ -21,19 +21,20 @@
                     <option value="ud">M Up Down</option>
                     <option value="fr">Free</option>
                 </select>
-                <p>プレイヤー<input type="number" id="player" value="1" min="1" />人</p>
-                <p>限定問題数：<input placeholder="限定問題数を入力" type="number" id="q" min="1" /></p>
-                <p>連答チャンス：<input id="ctn" type="checkbox"/></p>
-                <p id="mset">Mの値：<input placeholder="Mの値を入力" type="number" id="m" min="1" /></p>
-                <p id="nset">Nの値：<input type="number" placeholder="Nの値を入力" id="n" min="1" /></p>
+                <p><label for="player">プレイヤー</label><input type="number" id="player" value="1" min="1" />人</p>
+                <p><label for="q">限定問題数：</label><input placeholder="限定問題数を入力" type="number" id="q" min="1" /></p>
+                <p><label for="ctn">連答チャンス：</label><input id="ctn" type="checkbox"/></p>
+                <p id="mset"><label for="m">Mの値：</label><input placeholder="Mの値を入力" type="number" id="m" min="1" /></p>
+                <p id="nset"><label for="n">Nの値：</label><input type="number" placeholder="Nの値を入力" id="n" min="1" /></p>
                 <input type="button" id="start" value="Start" />
             </div>
             <h2>得点表</h2>
             <p id="rule">ルール : 設定されていません</p>
             <p>残り問題数 : <span id="num">なし</span></p>
             <table id="table" border="0"></table>
-            <input type="button" id="undo" value="Undo" />
-            <input type="button" id="skip" value="Skip" />
+            <input type="button" id="undo" value="Undo" disabled/>
+            <input type="button" id="skip" value="Skip" disabled/>
+            <input type="button" id="add" value="Add" disabled/>
         </main>
         <footer>
             <p>©2023 yp3292 All Rights Reserved</p>
