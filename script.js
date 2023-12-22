@@ -307,6 +307,7 @@ function pointRes(x,y){
         if(y >= 1){
             if(now % N == 0) resTxt.value = Number(resTxt.value) + N;
             else resTxt.value = Number(resTxt.value) + (now % N);
+            if(y == 2) resTxt.value = Number(resTxt.value) + 1;
         }else{
             resTxt.value = Number(resTxt.value) + y;
         }
