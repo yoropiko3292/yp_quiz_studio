@@ -7,6 +7,8 @@ let last = 0;
 let data = [];
 let people = [];
 let preAns = "none";
+let rest = [];
+let now;
 
 //設定の開閉
 document.getElementById("form-open").addEventListener("click",()=>{
@@ -50,13 +52,22 @@ document.getElementById("rule-select").addEventListener("change",()=>{
         setM.style.visibility = "visible"
         setN.style.visibility = "hidden"
         inpM.value = "";
+    }else if(ruleset.value == "fz"){
+        setM.style.visibility = "visible"
+        setN.style.visibility = "hidden"
+        inpM.value = "";
+    }else if(ruleset.value == "md"){
+        setM.style.visibility = "visible"
+        setN.style.visibility = "visible"
+        inpM.value = "";
+        inpN.value = "";
     }
     rule = ruleset.value;
 });
 
 //要素の追加
 function addMember(){
-
+    rest.push(0);
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     let ip = document.createElement("input");
@@ -70,7 +81,7 @@ function addMember(){
     tr.appendChild(td);
 
     td = document.createElement("td");
-    if(rule == "fr" || rule == "ox" || rule == "by"){ 
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){ 
         p = document.createElement("span");
         p.textContent = " ◯:"
         td.appendChild(p);
@@ -83,7 +94,7 @@ function addMember(){
         ip.disabled = true;
         td.appendChild(ip);
     }
-    if(rule == "fr" || rule == "ox" || rule == "by"){
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
         p = document.createElement("span");
         p.textContent = " ✕:"
         td.appendChild(p);
@@ -96,7 +107,7 @@ function addMember(){
         ip.disabled = true;
         td.appendChild(ip);
     }
-    if(rule == "by" || rule == "ny" || rule == "ud"){
+    if(rule == "by" || rule == "ny" || rule == "ud" || rule == "md"){
         p = document.createElement("span");
         p.textContent = " Score:"
         td.appendChild(p);
@@ -145,6 +156,7 @@ document.getElementById("start").addEventListener("click",newGame);
 
 //新しいゲームを開始
 function newGame(){
+    now = 1;
     document.getElementById("add").disabled = false;
     document.getElementById("skip").disabled = false;
     document.getElementById("undo").disabled = false;
@@ -172,6 +184,7 @@ function newGame(){
     }else{
         document.getElementById("num").textContent = L;
     }
+    document.getElementById("numN").textContent = 1;
     //ルールに応じて要素を配置
     if(document.getElementById("ctn").checked) preAns = "ok";
     else preAns = "none";
@@ -184,6 +197,8 @@ function newGame(){
     if(rule == "by") tmp += M + "by" + M;
     if(rule == "ny") tmp += M + "NewYork";
     if(rule == "ud") tmp += M + "Up Down";
+    if(rule == "md") tmp += M + "Mod" + N;
+    if(rule == "fz") tmp += M + "Freeze";
     document.getElementById("rule").textContent = tmp;
     let temp = document.getElementsByClassName("nameList");
     people = [];
@@ -210,7 +225,8 @@ function newGame(){
 
 //正解
 function pointAdd(x){
-    if(rule == "fr" || rule == "ox" || rule == "by"){
+    if(rest[x] != 0) return;
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
         let txt = document.getElementById("tru" + x);
         if(preAns == x)txt.value = Number(txt.value) + 1;
         txt.value = Number(txt.value) + 1;
@@ -222,7 +238,8 @@ function pointAdd(x){
 
 //不正解
 function pointsub(x){
-    if(rule == "fr" || rule == "ox" || rule == "by"){
+    if(rest[x] != 0) return;
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
         let txt = document.getElementById("fal" + x);
         txt.value = Number(txt.value) + 1;
     }
@@ -232,6 +249,18 @@ function pointsub(x){
 
 //点数、勝敗判定 引数x=id,正答ならy=1,誤答ならy=-1,連答ならy=2
 function pointRes(x,y){
+    if(rule == "fz"){
+        for(let i = 0;i < rest.length;i++){
+            if(rest[i] > 0){
+                rest[i]--;
+                document.getElementById("state" + i).value = rest[i] + "ターン休み";
+            }
+            if(rest[i] == 0){
+                document.getElementById("state" + i).value = "-";
+            }
+        }
+    }
+    let stateTxt = document.getElementById("state" + x);
     let lastText = document.getElementById("num");
     let datasets = document.getElementsByClassName("dataset");
     let time = new Date();
@@ -241,7 +270,6 @@ function pointRes(x,y){
     let truTxt = document.getElementById("tru" + x);
     let falTxt = document.getElementById("fal" + x);
     let resTxt = document.getElementById("res" + x);
-    let stateTxt = document.getElementById("state" + x);
     if(rule == "by"){
         resTxt.value = Number(truTxt.value) * (M - Number(falTxt.value));
         if(resTxt.value >= M * M) win = true;
@@ -268,10 +296,26 @@ function pointRes(x,y){
         if(truTxt.value >= M) win = true;
         if(falTxt.value >= N) cont = false;
     }
+    if(rule == "fz"){
+        if(truTxt.value >= M) win = true;
+        if(y == -1){ 
+            rest[x] = Number(falTxt.value);
+            stateTxt.value = falTxt.value + "ターン休み";
+        }
+    }
+    if(rule == "md"){
+        if(y >= 1){
+            if(now % N == 0) resTxt.value = Number(resTxt.value) + N;
+            else resTxt.value = Number(resTxt.value) + (now % N);
+        }else{
+            resTxt.value = Number(resTxt.value) + y;
+        }
+        if(resTxt.value >= M) win = true;
+    }
     if(!cont && (stateTxt.value == "-" || stateTxt.value == "誤答1")){
         stateTxt.value = "失格  " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
     }
-    if(win && (stateTxt.value != "-" || stateTxt.value != "誤答1")){
+    if(win && (stateTxt.value == "-" || stateTxt.value == "誤答1")){
         stateTxt.value = "Win!  " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
     }
     }
@@ -283,6 +327,8 @@ function pointRes(x,y){
     data[data.length] = values;
     if(lastText.textContent != "設定なし") lastText.textContent = Number(lastText.textContent) - 1;
     if(lastText.textContent == 0)setTimeout(()=>{alert("終了!")},100);
+    now++;
+    document.getElementById("numN").textContent = now;
 }
 
 //スキップ
