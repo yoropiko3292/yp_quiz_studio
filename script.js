@@ -241,7 +241,7 @@ function pointsub(x){
         let txt = document.getElementById("fal" + x);
         txt.value = Number(txt.value) + 1;
     }
-    if(preAns == x) preAns = "";
+    if(preAns === x) preAns = "";
     pointRes(x,-1);
 }
 
