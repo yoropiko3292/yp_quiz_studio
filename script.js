@@ -353,6 +353,8 @@ document.getElementById("add").addEventListener("click",()=>{
 //1手前の状態に戻す
 document.getElementById("undo").addEventListener("click",()=>{
     if(data.length > 1){
+        num--;
+        document.getElementById("numN").textContent = num;
         let lastText = document.getElementById("num");
         if(lastText.textContent != "なし") lastText.textContent = Number(lastText.textContent) + 1;
         let datasets = document.getElementsByClassName("dataset");
