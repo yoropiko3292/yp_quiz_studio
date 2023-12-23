@@ -81,7 +81,7 @@ function addMember(){
     tr.appendChild(td);
 
     td = document.createElement("td");
-    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){ 
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz" || rule == "md"){ 
         p = document.createElement("span");
         p.textContent = " ◯:"
         td.appendChild(p);
@@ -94,11 +94,10 @@ function addMember(){
         ip.disabled = true;
         td.appendChild(ip);
     }
-    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz" || rule == "md"){
         p = document.createElement("span");
         p.textContent = " ✕:"
         td.appendChild(p);
-
         ip = document.createElement("input");
         ip.type = "text";
         ip.id = "fal" + uid;
@@ -111,7 +110,6 @@ function addMember(){
         p = document.createElement("span");
         p.textContent = " Score:"
         td.appendChild(p);
-
         ip = document.createElement("input");
         ip.type = "text";
         ip.className = "dataset";
@@ -226,7 +224,7 @@ function newGame(){
 //正解
 function pointAdd(x){
     if(rest[x] != 0) return;
-    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz" || rule == "md"){
         let txt = document.getElementById("tru" + x);
         if(preAns == x)txt.value = Number(txt.value) + 1;
         txt.value = Number(txt.value) + 1;
@@ -239,7 +237,7 @@ function pointAdd(x){
 //不正解
 function pointsub(x){
     if(rest[x] != 0) return;
-    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz"){
+    if(rule == "fr" || rule == "ox" || rule == "by" || rule == "fz" || rule == "md"){
         let txt = document.getElementById("fal" + x);
         txt.value = Number(txt.value) + 1;
     }
@@ -312,6 +310,7 @@ function pointRes(x,y){
             resTxt.value = Number(resTxt.value) + y;
         }
         if(resTxt.value >= M) win = true;
+        if(falTxt.value >= N) cont = false;
     }
     if(!cont && (stateTxt.value == "-" || stateTxt.value == "誤答1")){
         stateTxt.value = "失格  " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
