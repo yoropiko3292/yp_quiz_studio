@@ -229,7 +229,7 @@ function pointAdd(x){
         if(preAns == x)txt.value = Number(txt.value) + 1;
         txt.value = Number(txt.value) + 1;
     }
-    if(preAns == x)pointRes(x,2);
+    if(preAns === x)pointRes(x,2);
     else pointRes(x,1);
     if(preAns != "none") preAns = x;
 }
